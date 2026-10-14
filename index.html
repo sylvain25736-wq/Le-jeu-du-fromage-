@@ -4,16 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Quiz du Marchand de Fromage</title>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght=700&family=Poppins:wght=400;600&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        :root {
-            --primary: #d97706; /* Jaune/orange fromage */
-            --bg: #fef3c7; /* Fond crème doux */
-            --dark: #2d2013; /* Marron foncé style ardoise/bois */
-            --white: #ffffff;
-            --error: #dc2626;
-            --success: #059669;
-        }
+        :root { --primary: #d97706; --bg: #fef3c7; --dark: #2d2013; --white: #ffffff; --error: #dc2626; --success: #059669; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Poppins', sans-serif; }
         body { background-color: var(--bg); color: var(--dark); padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .container { max-width: 500px; width: 100%; background: var(--white); padding: 25px; border-radius: 20px; box-shadow: 0 10px 25px rgba(45,32,19,0.1); border: 3px solid var(--primary); text-align: center; margin-bottom: 20px; }
@@ -25,27 +18,21 @@
         .question { font-size: 1.2rem; font-weight: 600; margin-bottom: 20px; color: var(--dark); }
         .btn-option { display: block; width: 100%; padding: 15px; margin: 10px 0; background: #fffbeb; border: 2px solid #fcd34d; border-radius: 12px; font-size: 1rem; font-weight: 600; color: var(--dark); cursor: pointer; transition: all 0.2s; text-align: left; }
         .btn-option:hover { background: var(--primary); color: white; border-color: var(--primary); }
-        input[type="text"], input[type="email"], input[type="tel"] { width: 100%; padding: 12px; margin: 8px 0 15px 0; border: 2px solid #fcd34d; border-radius: 10px; font-size: 1rem; width: 100%; }
+        input[type="text"], input[type="email"], input[type="tel"] { width: 100%; padding: 12px; margin: 8px 0 15px 0; border: 2px solid #fcd34d; border-radius: 10px; font-size: 1rem; }
         .btn-submit { background: var(--primary); color: white; border: none; padding: 15px 30px; font-size: 1.1rem; font-weight: bold; border-radius: 12px; cursor: pointer; width: 100%; box-shadow: 0 4px 6px rgba(217,119,6,0.2); }
-        .btn-submit:hover { background: #b45309; }
-        .btn-submit:disabled { background: #cbd5e1; cursor: not-allowed; box-shadow: none; }
+        .btn-submit:disabled { background: #cbd5e1; cursor: not-allowed; }
         .progress-bar { width: 100%; height: 8px; background: #fee2e2; border-radius: 4px; margin-bottom: 20px; overflow: hidden; }
         .progress { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s; }
         .error-message { color: var(--error); font-weight: 600; margin-bottom: 15px; display: none; font-size: 0.95rem; }
         .quiz-feedback { font-weight: 600; margin-top: 10px; min-height: 25px; font-size: 0.95rem; }
-        .admin-section { font-size: 0.8rem; margin-top: 30px; opacity: 0.5; cursor: pointer; }
-        #adminPanel { display: none; margin-top: 15px; padding: 15px; background: #f3f4f6; border-radius: 10px; border: 1px dashed #ccc; }
     </style>
 </head>
 <body>
-
     <div class="container">
         <h1>🧀 Le Grand Jeu du Fromager</h1>
         <p class="subtitle">Tirage au sort fin de mois • Un bon de 5€ à gagner !</p>
+        <div class="progress-bar"><div class="progress" id="progress"></div></div>
         
-        <div class="progress-bar" id="progressContainer"><div class="progress" id="progress"></div></div>
-
-        <!-- QUESTION 1 -->
         <div class="card active" id="q1">
             <div class="question">1. Quel fromage a été sacré "Roi des Fromages" lors d'un grand banquet historique en 1815 ?</div>
             <button class="btn-option" onclick="checkAnswer(1, 'B')">A. Le Camembert</button>
@@ -54,7 +41,6 @@
             <div class="quiz-feedback" id="feedback1"></div>
         </div>
 
-        <!-- QUESTION 2 -->
         <div class="card" id="q2">
             <div class="question">2. Combien de litres de lait faut-il environ pour une meule de Comté de 40 kg ?</div>
             <button class="btn-option" onclick="checkAnswer(2, 'B')">A. 50 litres</button>
@@ -63,7 +49,6 @@
             <div class="quiz-feedback" id="feedback2"></div>
         </div>
 
-        <!-- QUESTION 3 -->
         <div class="card" id="q3">
             <div class="question">3. Lequel de ces fromages n'est PAS à base de lait de chèvre ?</div>
             <button class="btn-option" onclick="checkAnswer(3, 'C')">A. Le Rocamadour</button>
@@ -72,7 +57,6 @@
             <div class="quiz-feedback" id="feedback3"></div>
         </div>
 
-        <!-- FORMULAIRE CLIENT -->
         <div class="card" id="formCard">
             <div class="question">Bravo ! Laissez vos coordonnées pour participer au tirage au sort 🎉</div>
             <div class="error-message" id="errorMsg">⚠️ Vous avez déjà participé ce mois-ci avec cet e-mail ou ce numéro !</div>
@@ -84,7 +68,6 @@
             </form>
         </div>
 
-        <!-- ÉCRAN DE FIN DEFINITIF -->
         <div class="card" id="thanksCard">
             <h2 style="color: var(--primary); margin-bottom: 15px;">C'est enregistré ! 🧀</h2>
             <p>Merci pour votre participation. Si vous êtes tiré au sort à la fin du mois, vous recevrez un bon d'achat de 5€ par e-mail !</p>
@@ -92,132 +75,44 @@
         </div>
     </div>
 
-    <!-- SECTION COMMERÇANT -->
-    <div class="admin-section" onclick="toggleAdmin()">⚙️ Zone Marchand (Tirage au sort)</div>
-    <div id="adminPanel" class="container" style="max-width: 500px;">
-        <h3>Espace Tirage au Sort</h3>
-        <p style="font-size:0.9rem; margin-bottom:10px;">Cliquez pour désigner un gagnant automatiquement depuis votre Google Sheets.</p>
-        <button class="btn-submit" onclick="tirerAuSort()" style="background: #059669;">🎲 Lancer le tirage au sort</button>
-        <div id="winnerResult" style="margin-top: 15px; font-weight: bold; color: #059669; font-size: 1.1rem;"></div>
-    </div>
-
     <script>
-        const sheetDBUrl = 'https://sheetdb.io/api/v1/f9knnu0j9qfw2'; // Votre nouveau tableau
-
-        function updateProgress(step) {
-            const percent = (step / 3) * 100;
-            document.getElementById('progress').style.width = percent + '%';
-        }
-
+        const sheetDBUrl = 'https://sheetdb.io';
+        function updateProgress(step) { document.getElementById('progress').style.width = (step / 3) * 100 + '%'; }
+        
         function checkAnswer(currentStep, correctLetter) {
-            const clickedBtn = event.target;
             const feedback = document.getElementById('feedback' + currentStep);
-            const chosenLetter = clickedBtn.innerText.charAt(0);
-
-            if (chosenLetter === correctLetter) {
-                feedback.style.color = 'var(--success)';
-                feedback.innerText = "🎉 Bonne réponse !";
-                
+            if (event.target.innerText.charAt(0) === correctLetter) {
+                feedback.style.color = 'var(--success)'; feedback.innerText = "🎉 Bonne réponse !";
                 setTimeout(() => {
                     document.getElementById('q' + currentStep).classList.remove('active');
                     updateProgress(currentStep);
-                    
-                    if (currentStep < 3) {
-                        document.getElementById('q' + (currentStep + 1)).classList.add('active');
-                    } else {
-                        document.getElementById('progressContainer').style.display = 'none';
-                        document.getElementById('formCard').classList.add('active');
-                    }
+                    if (currentStep < 3) { document.getElementById('q' + (currentStep + 1)).classList.add('active'); }
+                    else { document.getElementById('formCard').classList.add('active'); }
                 }, 800);
-            } else {
-                feedback.style.color = 'var(--error)';
-                feedback.innerText = "❌ Oups, ce n'est pas ça ! Réessayez...";
-            }
+            } else { feedback.style.color = 'var(--error)'; feedback.innerText = "❌ Oups, ce n'est pas ça ! Réessayez..."; }
         }
 
         function submitForm(event) {
             event.preventDefault();
-            
             const emailSaisi = document.getElementById('clientEmail').value.trim().toLowerCase();
             const telSaisi = document.getElementById('clientPhone').value.trim();
             const btn = document.getElementById('submitBtn');
             const errorElement = document.getElementById('errorMsg');
             
-            btn.disabled = true;
-            btn.innerText = "Vérification...";
-            errorElement.style.display = 'none';
+            btn.disabled = true; btn.innerText = "Enregistrement..."; errorElement.style.display = 'none';
 
             fetch(sheetDBUrl + '?ignore_cache=1')
-            .then(response => response.json())
+            .then(res => res.json())
             .then(liste => {
-                const dejaInscrit = liste.some(p => 
-                    (p.email && p.email.trim().toLowerCase() === emailSaisi) || 
-                    (p.tel && p.tel.trim() === telSaisi)
-                );
-
-                if (dejaInscrit) {
-                    errorElement.style.display = 'block';
-                    btn.disabled = false;
-                    btn.innerText = "Valider ma participation 🚀";
-                } else {
-                    const participant = {
-                        nom: document.getElementById('clientName').value,
-                        email: emailSaisi,
-                        tel: telSaisi
-                    };
-
-                    fetch(sheetDBUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ data: [participant] })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('formCard').classList.remove('active');
-                        document.getElementById('thanksCard').classList.add('active');
-                    });
+                const dejaInscrit = Array.isArray(liste) && liste.some(p => (p.email && p.email.trim().toLowerCase() === emailSaisi) || (p.tel && p.tel.trim() === telSaisi));
+                if (dejaInscrit) { errorElement.style.display = 'block'; btn.disabled = false; btn.innerText = "Valider ma participation 🚀"; }
+                else {
+                    const dataPayload = { nom: document.getElementById('clientName').value, email: emailSaisi, tel: telSaisi };
+                    fetch(sheetDBUrl, { method: 'POST', headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }, body: JSON.stringify({ data: [dataPayload] }) })
+                    .then(() => { document.getElementById('formCard').classList.remove('active'); document.getElementById('thanksCard').classList.add('active'); })
+                    .catch(() => { btn.disabled = false; btn.innerText = "Valider ma participation 🚀"; });
                 }
-            })
-            .catch(error => {
-                console.error("Erreur :", error);
-                btn.disabled = false;
-                btn.innerText = "Valider ma participation 🚀";
-            });
-        }
-
-        function toggleAdmin() {
-            const mdp = prompt("Entrez votre code secret commerçant :");
-            if (mdp === "1234") {
-                const panel = document.getElementById('adminPanel');
-                panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
-            } else if (mdp !== null) {
-                alert("Code incorrect !");
-            }
-        }
-
-        function tirerAuSort() {
-            document.getElementById('winnerResult').innerText = "Connexion au tableau Google Sheets...";
-            
-            fetch(sheetDBUrl + '?ignore_cache=1')
-            .then(response => response.json())
-            .then(liste => {
-                if (!liste || liste.length === 0) {
-                    document.getElementById('winnerResult').innerText = "Aucun participant dans le tableau Google Sheets.";
-                    return;
-                }
-                
-                const indexGagnant = Math.floor(Math.random() * liste.length);
-                const gagnant = liste[indexGagnant];
-                
-                document.getElementById('winnerResult').innerHTML = `🎉 GAGNANT UNIQUE :<br>${gagnant.nom}<br>📧 ${gagnant.email}<br>📱 ${gagnant.tel}`;
-            })
-            .catch(error => {
-                document.getElementById('winnerResult').innerText = "Erreur lors de la récupération des données.";
-                console.error(error);
-            });
+            }).catch(() => { btn.disabled = false; btn.innerText = "Valider ma participation 🚀"; });
         }
     </script>
 </body>
