@@ -132,3 +132,4 @@
         function toggleAdmin() { if (prompt("Code secret :") === "1234") { const p = document.getElementById('adminPanel'); p.style.display = p.style.display === 'block' ? 'none' : 'block'; } }
         function tirerAuSort() {
             document.getElementById('winnerResult').innerText = "Connexion au tableau Google Sheets...";
+            fetch(sheetDBUrl + '?ignore_cache=1')
