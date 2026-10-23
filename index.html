@@ -25,6 +25,8 @@
         .progress { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s; }
         .error-message { color: var(--error); font-weight: 600; margin-bottom: 15px; display: none; font-size: 0.95rem; }
         .quiz-feedback { font-weight: 600; margin-top: 10px; min-height: 25px; font-size: 0.95rem; }
+        .admin-section { font-size: 0.8rem; margin-top: 30px; opacity: 0.5; cursor: pointer; }
+        #adminPanel { display: none; margin-top: 15px; padding: 15px; background: #f3f4f6; border-radius: 10px; border: 1px dashed #ccc; }
     </style>
 </head>
 <body>
@@ -33,30 +35,34 @@
         <p class="subtitle">Tirage au sort fin de mois • Un bon de 5€ à gagner !</p>
         <div class="progress-bar"><div class="progress" id="progress"></div></div>
         
+        <!-- QUESTION 1 -->
         <div class="card active" id="q1">
-            <div class="question">1. Quel fromage a été sacré "Roi des Fromages" lors d'un grand banquet historique en 1815 ?</div>
-            <button class="btn-option" onclick="checkAnswer(1, 'B')">A. Le Camembert</button>
-            <button class="btn-option" onclick="checkAnswer(1, 'B')">B. Le Brie de Meaux</button>
-            <button class="btn-option" onclick="checkAnswer(1, 'B')">C. Le Munster</button>
+            <div class="question">1. Lequel de ces fromages est traditionnellement entouré d'une sangle en écorce d'épicéa qui lui donne son goût boisé ?</div>
+            <button class="btn-option" onclick="checkAnswer(1, 'B')">A. Le Morbier</button>
+            <button class="btn-option" onclick="checkAnswer(1, 'B')">B. Le Mont d'Or</button>
+            <button class="btn-option" onclick="checkAnswer(1, 'B')">C. Le Saint-Nectaire</button>
             <div class="quiz-feedback" id="feedback1"></div>
         </div>
 
+        <!-- QUESTION 2 -->
         <div class="card" id="q2">
-            <div class="question">2. Combien de litres de lait faut-il environ pour une meule de Comté de 40 kg ?</div>
-            <button class="btn-option" onclick="checkAnswer(2, 'B')">A. 50 litres</button>
-            <button class="btn-option" onclick="checkAnswer(2, 'B')">B. 400 litres</button>
-            <button class="btn-option" onclick="checkAnswer(2, 'B')">C. 1000 litres</button>
+            <div class="question">2. Quel fromage savoyard, né dans la magnifique vallée de Thônes, est la star de la vraie Tartiflette ?</div>
+            <button class="btn-option" onclick="checkAnswer(2, 'A')">A. Le Reblochon</button>
+            <button class="btn-option" onclick="checkAnswer(2, 'A')">B. Le Beaufort</button>
+            <button class="btn-option" onclick="checkAnswer(2, 'A')">C. L'Abondance</button>
             <div class="quiz-feedback" id="feedback2"></div>
         </div>
 
+        <!-- QUESTION 3 -->
         <div class="card" id="q3">
-            <div class="question">3. Lequel de ces fromages n'est PAS à base de lait de chèvre ?</div>
-            <button class="btn-option" onclick="checkAnswer(3, 'C')">A. Le Rocamadour</button>
-            <button class="btn-option" onclick="checkAnswer(3, 'C')">B. Le Crottin de Chavignol</button>
-            <button class="btn-option" onclick="checkAnswer(3, 'C')">C. Le Reblochon</button>
+            <div class="question">3. Pour faire une vraie fondue savoyarde onctueuse, quel fromage apporte le côté très "filant" ?</div>
+            <button class="btn-option" onclick="checkAnswer(3, 'C')">A. Le Comté</button>
+            <button class="btn-option" onclick="checkAnswer(3, 'C')">B. Le Beaufort</button>
+            <button class="btn-option" onclick="checkAnswer(3, 'C')">C. L'Emmental</button>
             <div class="quiz-feedback" id="feedback3"></div>
         </div>
 
+        <!-- FORMULAIRE -->
         <div class="card" id="formCard">
             <div class="question">Bravo ! Laissez vos coordonnées pour participer au tirage au sort 🎉</div>
             <div class="error-message" id="errorMsg">⚠️ Vous avez déjà participé ce mois-ci avec cet e-mail ou ce numéro !</div>
@@ -68,6 +74,7 @@
             </form>
         </div>
 
+        <!-- FIN -->
         <div class="card" id="thanksCard">
             <h2 style="color: var(--primary); margin-bottom: 15px;">C'est enregistré ! 🧀</h2>
             <p>Merci pour votre participation. Si vous êtes tiré au sort à la fin du mois, vous recevrez un bon d'achat de 5€ par e-mail !</p>
@@ -75,8 +82,17 @@
         </div>
     </div>
 
+    <!-- ZONE MARCHAND -->
+    <div class="admin-section" onclick="toggleAdmin()">⚙️ Zone Marchand (Tirage au sort)</div>
+    <div id="adminPanel" class="container" style="max-width: 500px;">
+        <h3>Espace Tirage au Sort</h3>
+        <p style="font-size:0.9rem; margin-bottom:10px;">Cliquez pour désigner un gagnant automatiquement depuis votre Google Sheets.</p>
+        <button class="btn-submit" onclick="tirerAuSort()" style="background: #059669;">🎲 Lancer le tirage au sort</button>
+        <div id="winnerResult" style="margin-top: 15px; font-weight: bold; color: #059669; font-size: 1.1rem;"></div>
+    </div>
+
     <script>
-        const sheetDBUrl = 'https://sheetdb.io/api/v1/199v74uqumxgo'; // Votre tout nouveau lien branché
+        const sheetDBUrl = 'https://sheetdb.io';
         function updateProgress(step) { document.getElementById('progress').style.width = (step / 3) * 100 + '%'; }
         
         function checkAnswer(currentStep, correctLetter) {
@@ -98,7 +114,6 @@
             const telSaisi = document.getElementById('clientPhone').value.trim();
             const btn = document.getElementById('submitBtn');
             const errorElement = document.getElementById('errorMsg');
-            
             btn.disabled = true; btn.innerText = "Enregistrement..."; errorElement.style.display = 'none';
 
             fetch(sheetDBUrl + '?ignore_cache=1')
@@ -114,6 +129,6 @@
                 }
             }).catch(() => { btn.disabled = false; btn.innerText = "Valider ma participation 🚀"; });
         }
-    </script>
-</body>
-</html>
+        function toggleAdmin() { if (prompt("Code secret :") === "1234") { const p = document.getElementById('adminPanel'); p.style.display = p.style.display === 'block' ? 'none' : 'block'; } }
+        function tirerAuSort() {
+            document.getElementById('winnerResult').innerText = "Connexion au tableau Google Sheets...";
