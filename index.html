@@ -165,43 +165,41 @@ label {
 <main class="container">
   <h1>🧀 Le Grand Jeu du Fromager</h1>
   <p class="subtitle">
-    Tirage au sort en fin de mois • Un bon d’achat de 5 € à gagner !
+    Tirage au sort chaque vendredi • Un bon d’achat de 5 € à gagner !
   </p>
 
   <div class="progress-bar" aria-label="Progression du quiz">
     <div class="progress" id="progress"></div>
   </div>
 
+  <!-- Carte Question 1 -->
   <section class="card active" id="q1">
-    <p class="question">
-      1. Quel fromage est traditionnellement entouré d’une sangle en écorce d’épicéa qui lui donne son goût boisé ?
-    </p>
-    <button class="btn-option" data-question="1" data-answer="A">A. Le Morbier</button>
-    <button class="btn-option" data-question="1" data-answer="B">B. Le Mont d’Or</button>
-    <button class="btn-option" data-question="1" data-answer="C">C. Le Saint-Nectaire</button>
+    <p class="question" id="text-q1">Chargement...</p>
+    <button class="btn-option" data-question="1" data-answer="A" id="btn-1-A"></button>
+    <button class="btn-option" data-question="1" data-answer="B" id="btn-1-B"></button>
+    <button class="btn-option" data-question="1" data-answer="C" id="btn-1-C"></button>
     <div class="feedback" id="feedback1" aria-live="polite"></div>
   </section>
 
+  <!-- Carte Question 2 -->
   <section class="card" id="q2">
-    <p class="question">
-      2. Quel fromage savoyard, né dans la vallée de Thônes, est la star de la tartiflette traditionnelle ?
-    </p>
-    <button class="btn-option" data-question="2" data-answer="A">A. Le Reblochon</button>
-    <button class="btn-option" data-question="2" data-answer="B">B. Le Beaufort</button>
-    <button class="btn-option" data-question="2" data-answer="C">C. L’Abondance</button>
+    <p class="question" id="text-q2">Chargement...</p>
+    <button class="btn-option" data-question="2" data-answer="A" id="btn-2-A"></button>
+    <button class="btn-option" data-question="2" data-answer="B" id="btn-2-B"></button>
+    <button class="btn-option" data-question="2" data-answer="C" id="btn-2-C"></button>
     <div class="feedback" id="feedback2" aria-live="polite"></div>
   </section>
 
+  <!-- Carte Question 3 -->
   <section class="card" id="q3">
-    <p class="question">
-      3. Quel fromage apporte souvent une texture bien filante à une fondue savoyarde ?
-    </p>
-    <button class="btn-option" data-question="3" data-answer="A">A. Le Comté</button>
-    <button class="btn-option" data-question="3" data-answer="B">B. Le Beaufort</button>
-    <button class="btn-option" data-question="3" data-answer="C">C. L’Emmental</button>
+    <p class="question" id="text-q3">Chargement...</p>
+    <button class="btn-option" data-question="3" data-answer="A" id="btn-3-A"></button>
+    <button class="btn-option" data-question="3" data-answer="B" id="btn-3-B"></button>
+    <button class="btn-option" data-question="3" data-answer="C" id="btn-3-C"></button>
     <div class="feedback" id="feedback3" aria-live="polite"></div>
   </section>
 
+  <!-- Formulaire de contact -->
   <section class="card" id="formCard">
     <p class="question">
       Bravo ! Remplissez vos coordonnées pour participer au tirage au sort 🎉
@@ -211,19 +209,13 @@ label {
 
     <form id="quizForm">
       <label for="clientName">Prénom et nom</label>
-      <input type="text" id="clientName" name="nom"
-        autocomplete="name" placeholder="Votre prénom et nom"
-        required maxlength="120">
+      <input type="text" id="clientName" name="nom" autocomplete="name" placeholder="Votre prénom et nom" required maxlength="120">
 
       <label for="clientEmail">Adresse e-mail</label>
-      <input type="email" id="clientEmail" name="email"
-        autocomplete="email" placeholder="Votre adresse e-mail"
-        required maxlength="254">
+      <input type="email" id="clientEmail" name="email" autocomplete="email" placeholder="Votre adresse e-mail" required maxlength="254">
 
       <label for="clientPhone">Numéro de téléphone</label>
-      <input type="tel" id="clientPhone" name="tel"
-        autocomplete="tel" placeholder="Votre numéro de téléphone"
-        required maxlength="30">
+      <input type="tel" id="clientPhone" name="tel" autocomplete="tel" placeholder="Votre numéro de téléphone" required maxlength="30">
 
       <button type="submit" id="submitBtn" class="btn-submit">
         Valider ma participation 🚀
@@ -231,16 +223,17 @@ label {
     </form>
 
     <p class="note">
-      Une participation par personne et par mois.
+      Une participation par personne et par semaine.
       Vos coordonnées servent à gérer le jeu et à contacter le gagnant.
     </p>
   </section>
 
+  <!-- Écran de remerciement -->
   <section class="card" id="thanksCard" aria-live="polite">
     <h2>Participation enregistrée ! 🧀</h2>
     <p>
-      Merci pour votre participation. Si vous êtes tiré au sort en fin
-      de mois, Chez Sylvain vous contactera pour votre bon d’achat de 5 €.
+      Merci pour votre participation. Si vous êtes tiré au sort,
+      Chez Sylvain vous contactera pour votre bon d’achat de 5 €.
     </p>
     <p><strong>À bientôt sur le stand !</strong></p>
   </section>
@@ -252,11 +245,8 @@ label {
 
 <section id="adminPanel" class="container">
   <h2>Espace tirage au sort</h2>
-  <p class="note">
-    Entrez votre code secret pour accéder au tirage.
-  </p>
+  <p class="note">Entrez votre code secret pour accéder au tirage.</p>
   
-  <!-- Formulaire de code PIN -->
   <div id="pinBox" style="margin-bottom: 12px;">
     <input type="password" id="adminPin" placeholder="Code secret (ex: 1234)" maxlength="10">
     <button class="btn-submit" id="pinBtn" type="button" style="background:#d97706; margin-top:8px;">
@@ -264,11 +254,8 @@ label {
     </button>
   </div>
   
-  <!-- Contenu protégé (masqué par défaut) -->
   <div id="secureContent" style="display: none;">
-    <p class="note">
-      Le tirage se fait parmi les participations enregistrées pour le mois en cours.
-    </p>
+    <p class="note">Le tirage se fait parmi les participations enregistrées.</p>
     <button class="btn-submit" id="drawBtn" type="button" style="background:#059669">
       🎲 Lancer le tirage au sort
     </button>
@@ -279,26 +266,92 @@ label {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const SHEETDB_URL = "https://sheetdb.io/api/v1/199v74uqumxgo";
-  const ANSWERS = { 1: "B", 2: "A", 3: "C" };
-  const ADMIN_PIN = "1234"; // 🔑 Vous pouvez modifier ce code secret ici si besoin
+  const ADMIN_PIN = "1234"; // 🔑 Votre code secret administrateur
+
+  // 🗓️ 4 SÉRIES DE QUESTIONS POUR ROTATION AUTOMATIQUE
+  const WEEKS_QUESTIONS = {
+    1: { 
+      answers: { 1: "B", 2: "A", 3: "C" },
+      q1: { text: "1. Quel fromage est traditionnellement entouré d’une sangle en écorce d’épicéa qui lui donne son goût boisé ?", A: "A. Le Morbier", B: "B. Le Mont d’Or", C: "C. Le Saint-Nectaire" },
+      q2: { text: "2. Quel fromage savoyard, né dans la vallée de Thônes, est la star de la tartiflette traditionnelle ?", A: "A. Le Reblochon", B: "B. Le Beaufort", C: "C. L’Abondance" },
+      q3: { text: "3. Quel fromage apporte souvent une texture bien filante à une fondue savoyarde ?", A: "A. Le Comté", B: "B. Le Beaufort", C: "C. L’Emmental" }
+    },
+    2: { 
+      answers: { 1: "A", 2: "B", 3: "A" },
+      q1: { text: "1. Quel célèbre fromage persillé français est né dans une grotte du plateau de Combalou ?", A: "A. Le Roquefort", B: "B. La Fourme d'Ambert", C: "C. Le Bleu des Causses" },
+      q2: { text: "2. De quel lait est traditionnellement fabriqué le véritable Crottin de Chavignol ?", A: "A. De vache", B: "B. De chèvre", C: "C. De brebis" },
+      q3: { text: "3. Quel fromage à pâte pressée non cuite, reconnaissable à sa bande de lin rouge, vient du Nord ?", A: "A. Le Maroilles", B: "B. Le Livarot", C: "C. Le Munster" }
+    },
+    3: { 
+      answers: { 1: "C", 2: "A", 3: "B" },
+      q1: { text: "1. Lequel de ces fromages possède une appellation d'origine protégée (AOP) en Corse ?", A: "A. Le Salers", B: "B. Le Laguiole", C: "C. Le Brocciu" },
+      q2: { text: "2. Quel fromage rond au lait de vache a une croûte lavée orangée et une odeur prononcée ?", A: "A. Le Munster", B: "B. L'Emmental", C: "C. Le Comté" },
+      q3: { text: "3. Avec quel type de lait fabrique-t-on traditionnellement le Roquefort ?", A: "A. Lait de vache", B: "B. Lait de brebis", C: "C. Lait de chèvre" }
+    },
+    4: { 
+      answers: { 1: "B", 2: "C", 3: "A" },
+      q1: { text: "1. De quelle région française est originaire le fameux Comté ?", A: "A. La Normandie", B: "B. La Franche-Comté", C: "C. L'Auvergne" },
+      q2: { text: "2. Quel est l'ingrédient principal pour fabriquer du fromage ?", A: "A. Du jus de fruit", B: "B. De l'eau minérale", C: "C. Du lait" },
+      q3: { text: "3. Quel fromage est creusé pour y verser du vin blanc lors d'une célèbre recette chaude ?", A: "A. L'Epoisses / Vacherin", B: "B. Le Cantal", C: "C. Le Saint-Paulin" }
+    }
+  };
+
+  // Calcul automatique de la semaine du mois basculant chaque vendredi à 10h00
+  function getWeeklyCycle() {
+    const now = new Date();
+    let weekIndex = 1;
+    
+    // On parcourt les jours du mois en cours jusqu'à l'heure actuelle pour compter les vendredis à 10h
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    
+    for (let day = 1; day <= now.getDate(); day++) {
+      const d = new Date(year, month, day, 10, 0, 0); // Vendredi à 10h00
+      // Si c'est un vendredi et que l'heure actuelle a dépassé ce vendredi 10h00 (sauf si c'est aujourd'hui avant 10h)
+      if (d.getDay() === 5) {
+        if (now >= d) {
+          weekIndex++;
+        }
+      }
+    }
+    // On boucle entre 1 et 4
+    return ((weekIndex - 1) % 4) + 1;
+  }
+
+  const currentWeek = getWeeklyCycle();
+  const activeQuiz = WEEKS_QUESTIONS[currentWeek];
+  const ANSWERS = activeQuiz.answers;
+
+  // Injection dynamique des questions de la semaine
+  document.getElementById("text-q1").textContent = activeQuiz.q1.text;
+  document.getElementById("btn-1-A").textContent = activeQuiz.q1.A;
+  document.getElementById("btn-1-B").textContent = activeQuiz.q1.B;
+  document.getElementById("btn-1-C").textContent = activeQuiz.q1.C;
+
+  document.getElementById("text-q2").textContent = activeQuiz.q2.text;
+  document.getElementById("btn-2-A").textContent = activeQuiz.q2.A;
+  document.getElementById("btn-2-B").textContent = activeQuiz.q2.B;
+  document.getElementById("btn-2-C").textContent = activeQuiz.q2.C;
+
+  document.getElementById("text-q3").textContent = activeQuiz.q3.text;
+  document.getElementById("btn-3-A").textContent = activeQuiz.q3.A;
+  document.getElementById("btn-3-B").textContent = activeQuiz.q3.B;
+  document.getElementById("btn-3-C").textContent = activeQuiz.q3.C;
 
   let answering = false;
-  const $ = id => document.getElementById(id);
 
   function showCard(id) {
     document.querySelectorAll(".card").forEach(card => {
       card.classList.remove("active");
     });
-    const target = $(id);
+    const target = document.getElementById(id);
     if (target) {
       target.classList.add("active");
-    } else {
-      console.error("Carte introuvable : " + id);
     }
   }
 
   function updateProgress(step) {
-    const bar = $("progress");
+    const bar = document.getElementById("progress");
     if (bar) bar.style.width = (step / 3 * 100) + "%";
   }
 
@@ -310,44 +363,32 @@ document.addEventListener("DOMContentLoaded", () => {
     return (value || "").replace(/\D/g, "");
   }
 
-  function currentMonthPrefix() {
-    const now = new Date();
-    return now.getFullYear() + "-" +
-      String(now.getMonth() + 1).padStart(2, "0");
-  }
-
   async function readParticipants() {
     const response = await fetch(
       SHEETDB_URL + "?ignore_cache=1",
       { method: "GET", cache: "no-store" }
     );
-
     if (!response.ok) throw new Error("READ");
-
     const data = await response.json();
     if (!Array.isArray(data)) throw new Error("FORMAT");
     return data;
   }
 
-  function isSameMonth(record) {
-    return String(record.date || "").slice(0, 7) === currentMonthPrefix();
-  }
-
   function setError(message) {
-    const err = $("errorMsg");
+    const err = document.getElementById("errorMsg");
     if (err) {
       err.textContent = message;
       err.style.display = "block";
     }
   }
 
-  // Options du quiz
+  // Gestion des clics sur les réponses du quiz
   document.querySelectorAll(".btn-option").forEach(button => {
     button.addEventListener("click", () => {
       if (answering) return;
 
       const step = Number(button.dataset.question);
-      const feedback = $("feedback" + step);
+      const feedback = document.getElementById("feedback" + step);
 
       if (button.dataset.answer !== ANSWERS[step]) {
         if (feedback) {
@@ -378,18 +419,18 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Formulaire
-  const quizForm = $("quizForm");
+  // Soumission du formulaire de participation
+  const quizForm = document.getElementById("quizForm");
   if (quizForm) {
     quizForm.addEventListener("submit", async event => {
       event.preventDefault();
 
-      const btn = $("submitBtn");
-      const email = normalizeEmail($("clientEmail").value);
-      const tel = normalizePhone($("clientPhone").value);
-      const nom = ($("clientName").value || "").trim();
+      const btn = document.getElementById("submitBtn");
+      const email = normalizeEmail(document.getElementById("clientEmail").value);
+      const tel = normalizePhone(document.getElementById("clientPhone").value);
+      const nom = (document.getElementById("clientName").value || "").trim();
 
-      const err = $("errorMsg");
+      const err = document.getElementById("errorMsg");
       if (err) err.style.display = "none";
       if (btn) {
         btn.disabled = true;
@@ -400,17 +441,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const participants = await readParticipants();
 
         const duplicate = participants.some(p =>
-          isSameMonth(p) &&
-          (
-            (p.email && normalizeEmail(p.email) === email) ||
-            (p.tel && normalizePhone(p.tel) === tel)
-          )
+          (p.email && normalizeEmail(p.email) === email) ||
+          (p.tel && normalizePhone(p.tel) === tel)
         );
 
         if (duplicate) {
-          setError(
-            "⚠️ Une participation avec cet e-mail ou ce téléphone existe déjà ce mois-ci."
-          );
+          setError("⚠️ Une participation avec cet e-mail ou ce téléphone existe déjà.");
           return;
         }
 
@@ -443,19 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
       } catch (error) {
-        if (error.message === "READ") {
-          setError(
-            "Impossible de lire les participations. Vérifiez l’URL et les autorisations SheetDB."
-          );
-        } else if (error.message === "WRITE" || error.message === "RESULT") {
-          setError(
-            "L’enregistrement n’a pas pu être confirmé. Vérifiez la configuration SheetDB."
-          );
-        } else {
-          setError(
-            "Connexion impossible. Vérifiez votre réseau et réessayez."
-          );
-        }
+        setError("Connexion impossible ou enregistrement non confirmé. Réessayez.");
       } finally {
         if (btn) {
           btn.disabled = false;
@@ -465,45 +489,44 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Zone marchand toggle & réinitialisation du PIN à la fermeture
-  const adminToggle = $("adminToggle");
+  // Zone marchand & Code PIN
+  const adminToggle = document.getElementById("adminToggle");
   if (adminToggle) {
     adminToggle.addEventListener("click", () => {
-      const panel = $("adminPanel");
+      const panel = document.getElementById("adminPanel");
       if (panel) {
         const isVisible = panel.style.display === "block";
         panel.style.display = isVisible ? "none" : "block";
 
         if (isVisible) {
-          $("adminPin").value = "";
-          $("secureContent").style.display = "none";
-          $("pinBox").style.display = "block";
-          $("winnerResult").textContent = "";
+          document.getElementById("adminPin").value = "";
+          document.getElementById("secureContent").style.display = "none";
+          document.getElementById("pinBox").style.display = "block";
+          document.getElementById("winnerResult").textContent = "";
         }
       }
     });
   }
 
-  // Validation du Code PIN
-  const pinBtn = $("pinBtn");
+  const pinBtn = document.getElementById("pinBtn");
   if (pinBtn) {
     pinBtn.addEventListener("click", () => {
-      const enteredPin = $("adminPin").value;
+      const enteredPin = document.getElementById("adminPin").value;
       if (enteredPin === ADMIN_PIN) {
-        $("pinBox").style.display = "none";
-        $("secureContent").style.display = "block";
+        document.getElementById("pinBox").style.display = "none";
+        document.getElementById("secureContent").style.display = "block";
       } else {
         alert("❌ Code secret incorrect !");
-        $("adminPin").value = "";
+        document.getElementById("adminPin").value = "";
       }
     });
   }
 
-  // Bouton Tirage au sort
-  const drawBtn = $("drawBtn");
+  // Tirage au sort
+  const drawBtn = document.getElementById("drawBtn");
   if (drawBtn) {
     drawBtn.addEventListener("click", async () => {
-      const result = $("winnerResult");
+      const result = document.getElementById("winnerResult");
       if (!result) return;
 
       result.textContent = "Chargement des participations…";
@@ -511,13 +534,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
       try {
         const participants = await readParticipants();
-        const eligible = participants.filter(p =>
-          isSameMonth(p) && p.nom && p.email
-        );
+        const eligible = participants.filter(p => p.nom && p.email);
 
         if (!eligible.length) {
-          result.textContent =
-            "Aucune participation enregistrée pour le mois en cours.";
+          result.textContent = "Aucune participation enregistrée.";
           return;
         }
 
@@ -529,8 +549,7 @@ document.addEventListener("DOMContentLoaded", () => {
           " (" + eligible.length + " participation(s) éligible(s)).";
 
       } catch (error) {
-        result.textContent =
-          "Impossible de récupérer les participations. Vérifiez SheetDB.";
+        result.textContent = "Impossible de récupérer les participations. Vérifiez SheetDB.";
       } finally {
         drawBtn.disabled = false;
       }
