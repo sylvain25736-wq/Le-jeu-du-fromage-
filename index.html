@@ -93,7 +93,8 @@ h2 { color: var(--primary); }
 .btn-option:disabled { opacity: .65; }
 input[type="text"],
 input[type="email"],
-input[type="tel"] {
+input[type="tel"],
+input[type="password"] {
   display: block;
   width: 100%;
   padding: 13px;
@@ -252,19 +253,34 @@ label {
 <section id="adminPanel" class="container">
   <h2>Espace tirage au sort</h2>
   <p class="note">
-    Le tirage se fait parmi les participations enregistrées pour le mois en cours.
+    Entrez votre code secret pour accéder au tirage.
   </p>
-  <button class="btn-submit" id="drawBtn" type="button"
-    style="background:#059669">
-    🎲 Lancer le tirage au sort
-  </button>
-  <div id="winnerResult" aria-live="polite"></div>
+  
+  <!-- Formulaire de code PIN -->
+  <div id="pinBox" style="margin-bottom: 12px;">
+    <input type="password" id="adminPin" placeholder="Code secret (ex: 1234)" maxlength="10">
+    <button class="btn-submit" id="pinBtn" type="button" style="background:#d97706; margin-top:8px;">
+      Valider le code 🔓
+    </button>
+  </div>
+  
+  <!-- Contenu protégé (masqué par défaut) -->
+  <div id="secureContent" style="display: none;">
+    <p class="note">
+      Le tirage se fait parmi les participations enregistrées pour le mois en cours.
+    </p>
+    <button class="btn-submit" id="drawBtn" type="button" style="background:#059669">
+      🎲 Lancer le tirage au sort
+    </button>
+    <div id="winnerResult" aria-live="polite"></div>
+  </div>
 </section>
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const SHEETDB_URL = "https://sheetdb.io/api/v1/199v74uqumxgo";
   const ANSWERS = { 1: "B", 2: "A", 3: "C" };
+  const ADMIN_PIN = "1234"; // 🔑 Vous pouvez modifier ce code secret ici si besoin
 
   let answering = false;
   const $ = id => document.getElementById(id);
@@ -449,13 +465,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Zone marchand toggle
+  // Zone marchand toggle & réinitialisation du PIN à la fermeture
   const adminToggle = $("adminToggle");
   if (adminToggle) {
     adminToggle.addEventListener("click", () => {
       const panel = $("adminPanel");
       if (panel) {
-        panel.style.display = panel.style.display === "block" ? "none" : "block";
+        const isVisible = panel.style.display === "block";
+        panel.style.display = isVisible ? "none" : "block";
+
+        if (isVisible) {
+          $("adminPin").value = "";
+          $("secureContent").style.display = "none";
+          $("pinBox").style.display = "block";
+          $("winnerResult").textContent = "";
+        }
+      }
+    });
+  }
+
+  // Validation du Code PIN
+  const pinBtn = $("pinBtn");
+  if (pinBtn) {
+    pinBtn.addEventListener("click", () => {
+      const enteredPin = $("adminPin").value;
+      if (enteredPin === ADMIN_PIN) {
+        $("pinBox").style.display = "none";
+        $("secureContent").style.display = "block";
+      } else {
+        alert("❌ Code secret incorrect !");
+        $("adminPin").value = "";
       }
     });
   }
