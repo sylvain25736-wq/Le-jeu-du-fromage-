@@ -228,7 +228,7 @@ label {
     </p>
   </section>
   
-    <!-- Écran de remerciement -->
+  <!-- Écran de remerciement -->
   <section class="card" id="thanksCard" aria-live="polite">
     <h2>Participation enregistrée ! 🧀</h2>
     <p>
@@ -237,8 +237,8 @@ label {
     </p>
     <p><strong>À bientôt sur le stand !</strong></p>
 
-    <!-- 🔗 Lien vers le quiz illimité -->
-    <a href="quiz-illimite.html" class="btn-submit" style="background: #059669; margin-top: 18px; text-decoration: none; display: inline-block;">
+    <!-- 🔗 Lien direct vers le quiz illimité corrigé -->
+    <a href="https://sylvain25736-wq.github.io/Quiz-illimite.html/" class="btn-submit" style="background: #059669; margin-top: 18px; text-decoration: none; display: inline-block;">
       🎓 Envie de continuer ? Jouez au Quiz Illimité ! ♾️
     </a>
   </section>
@@ -313,14 +313,12 @@ document.addEventListener("DOMContentLoaded", () => {
     
     for (let day = 1; day <= now.getDate(); day++) {
       const d = new Date(year, month, day, 10, 0, 0); // Vendredi à 10h00
-      // Si c'est un vendredi et que l'heure actuelle a dépassé ce vendredi 10h00 (sauf si c'est aujourd'hui avant 10h)
       if (d.getDay() === 5) {
         if (now >= d) {
           weekIndex++;
         }
       }
     }
-    // On boucle entre 1 et 4
     return ((weekIndex - 1) % 4) + 1;
   }
 
