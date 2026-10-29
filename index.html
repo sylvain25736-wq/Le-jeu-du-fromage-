@@ -154,6 +154,10 @@ label {
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
+#duplicateQuizBtn {
+  display: none;
+  margin-top: 15px;
+}
 @media(max-width:380px) {
   .container { padding: 18px; }
   body { padding: 10px; }
@@ -207,6 +211,11 @@ label {
 
     <p class="error-message" id="errorMsg" role="alert"></p>
 
+    <!-- 🔗 Bouton dynamique si déjà inscrit -->
+    <a id="duplicateQuizBtn" href="https://sylvain25736-wq.github.io/Quiz-illimite.html/" class="btn-submit" style="background: #059669; text-decoration: none;">
+      🎓 Jouer directement au Quiz Illimité ! ♾️
+    </a>
+
     <form id="quizForm">
       <label for="clientName">Prénom et nom</label>
       <input type="text" id="clientName" name="nom" autocomplete="name" placeholder="Votre prénom et nom" required maxlength="120">
@@ -237,7 +246,7 @@ label {
     </p>
     <p><strong>À bientôt sur le stand !</strong></p>
 
-    <!-- 🔗 Lien direct vers le quiz illimité corrigé -->
+    <!-- 🔗 Lien vers le quiz illimité -->
     <a href="https://sylvain25736-wq.github.io/Quiz-illimite.html/" class="btn-submit" style="background: #059669; margin-top: 18px; text-decoration: none; display: inline-block;">
       🎓 Envie de continuer ? Jouez au Quiz Illimité ! ♾️
     </a>
@@ -272,9 +281,8 @@ label {
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const SHEETDB_URL = "https://sheetdb.io/api/v1/199v74uqumxgo";
-  const ADMIN_PIN = "1234"; // 🔑 Votre code secret administrateur
+  const ADMIN_PIN = "1234";
 
-  // 🗓️ 4 SÉRIES DE QUESTIONS POUR ROTATION AUTOMATIQUE
   const WEEKS_QUESTIONS = {
     1: { 
       answers: { 1: "B", 2: "A", 3: "C" },
@@ -302,17 +310,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // Calcul automatique de la semaine du mois basculant chaque vendredi à 10h00
   function getWeeklyCycle() {
     const now = new Date();
     let weekIndex = 1;
-    
-    // On parcourt les jours du mois en cours jusqu'à l'heure actuelle pour compter les vendredis à 10h
     const year = now.getFullYear();
     const month = now.getMonth();
     
     for (let day = 1; day <= now.getDate(); day++) {
-      const d = new Date(year, month, day, 10, 0, 0); // Vendredi à 10h00
+      const d = new Date(year, month, day, 10, 0, 0);
       if (d.getDay() === 5) {
         if (now >= d) {
           weekIndex++;
@@ -326,7 +331,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const activeQuiz = WEEKS_QUESTIONS[currentWeek];
   const ANSWERS = activeQuiz.answers;
 
-  // Injection dynamique des questions de la semaine
   document.getElementById("text-q1").textContent = activeQuiz.q1.text;
   document.getElementById("btn-1-A").textContent = activeQuiz.q1.A;
   document.getElementById("btn-1-B").textContent = activeQuiz.q1.B;
@@ -378,15 +382,18 @@ document.addEventListener("DOMContentLoaded", () => {
     return data;
   }
 
-  function setError(message) {
+  function setError(message, isDuplicate = false) {
     const err = document.getElementById("errorMsg");
+    const dupBtn = document.getElementById("duplicateQuizBtn");
     if (err) {
       err.textContent = message;
       err.style.display = "block";
     }
+    if (dupBtn) {
+      dupBtn.style.display = isDuplicate ? "inline-block" : "none";
+    }
   }
 
-  // Gestion des clics sur les réponses du quiz
   document.querySelectorAll(".btn-option").forEach(button => {
     button.addEventListener("click", () => {
       if (answering) return;
@@ -423,7 +430,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Soumission du formulaire de participation
   const quizForm = document.getElementById("quizForm");
   if (quizForm) {
     quizForm.addEventListener("submit", async event => {
@@ -435,7 +441,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const nom = (document.getElementById("clientName").value || "").trim();
 
       const err = document.getElementById("errorMsg");
+      const dupBtn = document.getElementById("duplicateQuizBtn");
       if (err) err.style.display = "none";
+      if (dupBtn) dupBtn.style.display = "none";
+
       if (btn) {
         btn.disabled = true;
         btn.textContent = "Vérification et enregistrement…";
@@ -450,7 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         if (duplicate) {
-          setError("⚠️ Une participation avec cet e-mail ou ce téléphone existe déjà.");
+          setError("⚠️ Vous avez déjà participé cette semaine ! Mais vous pouvez vous entraîner sur le Quiz Illimité ⬇️", true);
           return;
         }
 
@@ -493,7 +502,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Zone marchand & Code PIN
   const adminToggle = document.getElementById("adminToggle");
   if (adminToggle) {
     adminToggle.addEventListener("click", () => {
@@ -526,7 +534,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Tirage au sort
   const drawBtn = document.getElementById("drawBtn");
   if (drawBtn) {
     drawBtn.addEventListener("click", async () => {
